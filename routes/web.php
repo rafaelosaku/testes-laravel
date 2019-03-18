@@ -11,7 +11,8 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', 'Testes\TestesController@calendar')->name('calendar');
+Route::get('/', function () {
+    return view('welcome');
+});
+// Route::get('/', 'Testes\TestesController@calendar')->name('calendar');
+Route::resource('/events', 'EventController');

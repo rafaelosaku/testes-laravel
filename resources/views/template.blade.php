@@ -11,7 +11,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css">
+        @stack('css')
 
     </head>
     <body>
@@ -20,6 +20,6 @@
             @yield('content')
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
+        @stack('scripts')
     </body>
 </html>
