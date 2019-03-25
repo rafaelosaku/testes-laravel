@@ -20,7 +20,7 @@ class EventController extends Controller
             $enddate = $row->end_date." 24:00:00";
             $event[] = \Calendar::event(
                 $row->title,
-                true,
+                false,
                 new \DateTime($row->start_date),
                 new \DateTime($row->end_date),
                 $row->id,
@@ -31,7 +31,7 @@ class EventController extends Controller
         }
 
         $calendar = \Calendar::addEvents($event);
-        return view('testes.index', compact('events', 'calendar'));
+        return view('events.index', compact('events', 'calendar'));
 
     }
 
@@ -42,7 +42,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('events.create-event');
     }
 
     /**
@@ -53,7 +53,26 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'color' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
+
+        $event = $request->all();
+
+        // $events = new Event;
+
+        // $events->title = $request->input('title');
+        // $events->color = $request->input('color');
+        // $events->start_date = $request->input('start_date');
+        // $events->end_date = $request->input('end_date');
+
+        // $events->save();
+        Event::create($event);
+
+        return redirect('events')->with('success', 'Evento adicionadado');
     }
 
     /**

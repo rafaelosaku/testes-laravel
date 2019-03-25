@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 // Route::get('/', 'Testes\TestesController@calendar')->name('calendar');
 Route::resource('/events', 'EventController');
+Route::get('/crops', 'CropController@index')->name('crops.index');

@@ -93,6 +93,7 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a> --}}
                     <a href="{{ route('events.index') }}">Events FullCalendar</a>
+                    <a href="{{ route('crops.index') }}">Crop Images Jcrop</a>
                 </div>
             </div>
         </div>

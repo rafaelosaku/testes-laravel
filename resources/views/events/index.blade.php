@@ -7,12 +7,20 @@
                 <div class="card-header">
                     <h1>FullCalendar</h1>
                 </div>
-                
+
                 <div class="card-body">
                     {!! $calendar->calendar() !!}
-                    
+
+                </div>
+                <div class="card-footer">
+                    <a href="{{ route('events.create') }}" class="btn btn-primary">Adicionar</a>
                 </div>
             </div>
+            @if(Session::has('success'))
+                <div class="alert alert-success">
+                    <span>{{ Session::get('success') }}</span>
+                </div>
+            @endif
         </div>
     </div>
 
