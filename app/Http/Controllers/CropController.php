@@ -11,7 +11,7 @@ class CropController extends Controller
     public function index()
     {
         $data['imagem'] = Session::get('img');
-        $data['model'] = true;
+        $data['model'] = (Session::get('modal') == null ? 'false' : 'true');
         return view('crops.index', compact('data'));
     }
 
@@ -20,17 +20,22 @@ class CropController extends Controller
         $this->validate($request, ['image' => 'required']);
         
         $input = $request->all();
-        $image = $request->file('image');
-        $image_name = $image->getClientOriginalName();
-        $image->move('images', $image_name);
-
-        $image_final = 'images/' . $image_name;
-
-        $inter_image = Image::make($image_final);
-        $inter_image->resize(600, null, function($constraint){
-            $constraint->aspectRatio();
-        });
-        $inter_image->save($image_final);
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $image_name = $image->getClientOriginalName();
+            $image->move('images', $image_name);
+    
+            $image_final = 'images/' . $image_name;
+    
+            $inter_image = Image::make($image_final);
+            $inter_image->resize(600, null, function($constraint){
+                $constraint->aspectRatio();
+            });
+            $inter_image->save($image_final);
+            Session::put('modal', 'true');
+        }else{
+            $image_final = $request->img_bckp;
+        }
         // dd($image_name);
         Session::put('img', $image_final);
         return redirect()->route('crops.index');

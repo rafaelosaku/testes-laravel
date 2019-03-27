@@ -26,6 +26,7 @@
         <form action="{{ route('crops.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <img src="{{ $data['imagem'] }}" alt="">
+            <input type="hidden" name="img_bckp" src="{{ $data['imagem'] }}" alt="">
             <div class="form-group">
                 <label for="image">Imagem</label>
                 <input type="file" name="image" id="image" class="form-control">
@@ -49,11 +50,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/2.0.4/js/Jcrop.js"></script>
     <script>
         var model;
-        if($('#model').val() == 'true'){
-            model = 'true';
+        if($('#modal').val() == 'true'){
+            model = true;
         }
         else{
-            model = 'false';
+            model = false;
         }
 
         $(document).ready(function() {
