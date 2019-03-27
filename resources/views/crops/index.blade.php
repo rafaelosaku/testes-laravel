@@ -14,11 +14,19 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img src="{{ $data['imagem'] }}" alt="" id="crop">
+                        <form action="{{ route('crop.image') }}" method="post" onsubmit="return checkCoords();">
+                            @csrf
+                            <img src="{{ $data['imagem'] }}" alt="" id="crop">
+                            {{-- <input type="hidden" name="src" id="src" value="{{ $data['imagem'] }}"> --}}
+                            <input type="hidden" name="x" id="x">
+                            <input type="hidden" name="y" id="y">
+                            <input type="hidden" name="w" id="w">
+                            <input type="hidden" name="h" id="h">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Salvar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -26,7 +34,7 @@
         <form action="{{ route('crops.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <img src="{{ $data['imagem'] }}" alt="">
-            <input type="hidden" name="img_bckp" src="{{ $data['imagem'] }}" alt="">
+            <input type="hidden" name="img_bckp" value="{{ $data['imagem'] }}">
             <div class="form-group">
                 <label for="image">Imagem</label>
                 <input type="file" name="image" id="image" class="form-control">
@@ -40,7 +48,7 @@
         </button> --}}
     </div>
 
-    
+
 </div>
 @endsection
 @push('css')
@@ -49,12 +57,12 @@
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/2.0.4/js/Jcrop.js"></script>
     <script>
-        var model;
+        var modal;
         if($('#modal').val() == 'true'){
-            model = true;
+            modal = true;
         }
         else{
-            model = false;
+            modal = false;
         }
 
         $(document).ready(function() {
@@ -63,7 +71,7 @@
                 onSelect: atualizaCoordenadas
             })
 
-            $('#cropModal').modal({show: model})
+            $('#cropModal').modal({show: modal})
         })
 
         function atualizaCoordenadas(c)

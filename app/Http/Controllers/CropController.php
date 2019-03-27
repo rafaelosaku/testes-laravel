@@ -18,15 +18,15 @@ class CropController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['image' => 'required']);
-        
+
         $input = $request->all();
         if($request->hasFile('image')){
             $image = $request->file('image');
             $image_name = $image->getClientOriginalName();
             $image->move('images', $image_name);
-    
+
             $image_final = 'images/' . $image_name;
-    
+
             $inter_image = Image::make($image_final);
             $inter_image->resize(600, null, function($constraint){
                 $constraint->aspectRatio();
@@ -36,8 +36,27 @@ class CropController extends Controller
         }else{
             $image_final = $request->img_bckp;
         }
-        // dd($image_name);
+        // dd($request->img_bckp);
         Session::put('img', $image_final);
+        return redirect()->route('crops.index');
+    }
+
+    public function cropImage(Request $request)
+    {
+        Session::forget('modal');
+
+        $w = intval($request->w);
+        $h = intval($request->h);
+        $x = intval($request->x);
+        $y = intval($request->y);
+
+        $img = Session::get('img');
+
+        $int_img = Image::make($img);
+        $int_img->crop($w, $h, $x, $y);
+        $int_img->fit(350);
+        $int_img->save($img);
+
         return redirect()->route('crops.index');
     }
 }

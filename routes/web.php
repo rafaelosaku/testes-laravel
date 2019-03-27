@@ -18,3 +18,4 @@ Route::get('/', function () {
 Route::resource('/events', 'EventController');
 Route::get('/crops', 'CropController@index')->name('crops.index');
 Route::post('/crops-store', 'CropController@store')->name('crops.store');
+Route::post('/crop-image', 'CropController@cropImage')->name('crop.image');
